@@ -1,6 +1,6 @@
 # log
 
-[![Go Reference](https://log.go.dev/badge/github.com/tprasadtp/log.svg)](https://log.go.dev/github.com/tprasadtp/log)
+[![Go Reference](https://pkg.go.dev/badge/github.com/tprasadtp/log.svg)](https://pkg.go.dev/github.com/tprasadtp/log)
 [![test](https://github.com/tprasadtp/log/workflows/test/badge.svg)](https://github.com/tprasadtp/log/actions?query=workflow%3Atest)
 ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/tprasadtp/log?color=00ADD8&label=go&logo=go)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/tprasadtp/log?label=version&logo=github&sort=semver)](https://github.com/tprasadtp/log/tags)
