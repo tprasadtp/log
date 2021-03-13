@@ -1,152 +1,154 @@
-package log
+package log_test
 
 import (
 	"bytes"
 	"fmt"
 	"strings"
 	"testing"
+
+	"github.com/tprasadtp/log"
 )
 
 func TestInterface(t *testing.T) {
 	buf := &bytes.Buffer{}
 	lgr := newTestLogger(buf)
-	Current = lgr
+	log.Current = lgr
 
-	Trace("test trace")
+	log.Trace("test trace")
 	if !strings.Contains(buf.String(), `level=trace msg="test trace"`) {
 		t.Error("current logger at trace not logging correctly")
 	}
 	buf.Reset()
 
-	Tracef("Hello %s", "World")
+	log.Tracef("Hello %s", "World")
 	if !strings.Contains(buf.String(), `level=trace msg="Hello World"`) {
 		t.Error("current logger at trace not logging correctly")
 	}
 	buf.Reset()
 
-	Tracew("foo bar", Fields{"baz": "qux"})
+	log.Tracew("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `level=trace msg="foo bar" baz=qux`) {
 		t.Log(buf.String())
 		t.Error("current logger at trace not logging correctly")
 	}
 	buf.Reset()
 
-	Debug("test debug")
+	log.Debug("test debug")
 	if !strings.Contains(buf.String(), `level=debug msg="test debug"`) {
 		t.Error("current logger at debug not logging correctly")
 	}
 	buf.Reset()
 
-	Debugf("Hello %s", "World")
+	log.Debugf("Hello %s", "World")
 	if !strings.Contains(buf.String(), `level=debug msg="Hello World"`) {
 		t.Error("current logger at debug not logging correctly")
 	}
 	buf.Reset()
 
-	Debugw("foo bar", Fields{"baz": "qux"})
+	log.Debugw("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `level=debug msg="foo bar" baz=qux`) {
 		t.Log(buf.String())
 		t.Error("current logger at info not logging correctly")
 	}
 	buf.Reset()
 
-	Info("test info")
+	log.Info("test info")
 	if !strings.Contains(buf.String(), `level=info msg="test info"`) {
 		t.Error("current logger at info not logging correctly")
 	}
 	buf.Reset()
 
-	Infof("Hello %s", "World")
+	log.Infof("Hello %s", "World")
 	if !strings.Contains(buf.String(), `level=info msg="Hello World"`) {
 		t.Error("current logger at info not logging correctly")
 	}
 	buf.Reset()
 
-	Infow("foo bar", Fields{"baz": "qux"})
+	log.Infow("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `level=info msg="foo bar" baz=qux`) {
 		t.Log(buf.String())
 		t.Error("current logger at info not logging correctly")
 	}
 	buf.Reset()
 
-	Warn("test warn")
+	log.Warn("test warn")
 	if !strings.Contains(buf.String(), `level=warning msg="test warn"`) {
 		t.Log(buf.String())
 		t.Error("current logger at warn not logging correctly")
 	}
 	buf.Reset()
 
-	Warnf("Hello %s", "World")
+	log.Warnf("Hello %s", "World")
 	if !strings.Contains(buf.String(), `level=warning msg="Hello World"`) {
 		t.Log(buf.String())
 		t.Error("current logger at warn not logging correctly")
 	}
 	buf.Reset()
 
-	Warnw("foo bar", Fields{"baz": "qux"})
+	log.Warnw("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `level=warning msg="foo bar" baz=qux`) {
 		t.Log(buf.String())
 		t.Error("current logger at warn not logging correctly")
 	}
 	buf.Reset()
 
-	Error("test error")
+	log.Error("test error")
 	if !strings.Contains(buf.String(), `level=error msg="test error"`) {
 		t.Log(buf.String())
 		t.Error("current logger at error not logging correctly")
 	}
 	buf.Reset()
 
-	Errorf("Hello %s", "World")
+	log.Errorf("Hello %s", "World")
 	if !strings.Contains(buf.String(), `level=error msg="Hello World"`) {
 		t.Log(buf.String())
 		t.Error("current logger at error not logging correctly")
 	}
 	buf.Reset()
 
-	Errorw("foo bar", Fields{"baz": "qux"})
+	log.Errorw("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `level=error msg="foo bar" baz=qux`) {
 		t.Log(buf.String())
 		t.Error("current logger at error not logging correctly")
 	}
 	buf.Reset()
 
-	Panic("test panic")
+	log.Panic("test panic")
 	if !strings.Contains(buf.String(), `level=panic msg="test panic"`) {
 		t.Log(buf.String())
 		t.Error("current logger at panic not logging correctly")
 	}
 	buf.Reset()
 
-	Panicf("Hello %s", "World")
+	log.Panicf("Hello %s", "World")
 	if !strings.Contains(buf.String(), `level=panic msg="Hello World"`) {
 		t.Log(buf.String())
 		t.Error("current logger at panic not logging correctly")
 	}
 	buf.Reset()
 
-	Panicw("foo bar", Fields{"baz": "qux"})
+	log.Panicw("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `level=panic msg="foo bar" baz=qux`) {
 		t.Log(buf.String())
 		t.Error("current logger at panic not logging correctly")
 	}
 	buf.Reset()
 
-	Fatal("test fatal")
+	log.Fatal("test fatal")
 	if !strings.Contains(buf.String(), `level=fatal msg="test fatal"`) {
 		t.Log(buf.String())
 		t.Error("current logger at error not logging correctly")
 	}
 	buf.Reset()
 
-	Fatalf("Hello %s", "World")
+	log.Fatalf("Hello %s", "World")
 	if !strings.Contains(buf.String(), `level=fatal msg="Hello World"`) {
 		t.Log(buf.String())
 		t.Error("current logger at error not logging correctly")
 	}
 	buf.Reset()
 
-	Fatalw("foo bar", Fields{"baz": "qux"})
+	log.Fatalw("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `level=fatal msg="foo bar" baz=qux`) {
 		t.Log(buf.String())
 		t.Error("current logger at error not logging correctly")
@@ -172,7 +174,7 @@ func (l testLogger) Tracef(template string, args ...interface{}) {
 	dummyf(l.logger, "trace", template, args...)
 }
 
-func (l testLogger) Tracew(msg string, fields Fields) {
+func (l testLogger) Tracew(msg string, fields log.Fields) {
 	dummyw(l.logger, "trace", msg, fields)
 }
 
@@ -184,7 +186,7 @@ func (l testLogger) Debugf(template string, args ...interface{}) {
 	dummyf(l.logger, "debug", template, args...)
 }
 
-func (l testLogger) Debugw(msg string, fields Fields) {
+func (l testLogger) Debugw(msg string, fields log.Fields) {
 	dummyw(l.logger, "debug", msg, fields)
 }
 
@@ -196,7 +198,7 @@ func (l testLogger) Infof(template string, args ...interface{}) {
 	dummyf(l.logger, "info", template, args...)
 }
 
-func (l testLogger) Infow(msg string, fields Fields) {
+func (l testLogger) Infow(msg string, fields log.Fields) {
 	dummyw(l.logger, "info", msg, fields)
 }
 
@@ -208,7 +210,7 @@ func (l testLogger) Warnf(template string, args ...interface{}) {
 	dummyf(l.logger, "warning", template, args...)
 }
 
-func (l testLogger) Warnw(msg string, fields Fields) {
+func (l testLogger) Warnw(msg string, fields log.Fields) {
 	dummyw(l.logger, "warning", msg, fields)
 }
 
@@ -220,7 +222,7 @@ func (l testLogger) Errorf(template string, args ...interface{}) {
 	dummyf(l.logger, "error", template, args...)
 }
 
-func (l testLogger) Errorw(msg string, fields Fields) {
+func (l testLogger) Errorw(msg string, fields log.Fields) {
 	dummyw(l.logger, "error", msg, fields)
 }
 
@@ -232,7 +234,7 @@ func (l testLogger) Panicf(template string, args ...interface{}) {
 	dummyf(l.logger, "panic", template, args...)
 }
 
-func (l testLogger) Panicw(msg string, fields Fields) {
+func (l testLogger) Panicw(msg string, fields log.Fields) {
 	dummyw(l.logger, "panic", msg, fields)
 }
 
@@ -244,7 +246,7 @@ func (l testLogger) Fatalf(template string, args ...interface{}) {
 	dummyf(l.logger, "fatal", template, args...)
 }
 
-func (l testLogger) Fatalw(msg string, fields Fields) {
+func (l testLogger) Fatalw(msg string, fields log.Fields) {
 	dummyw(l.logger, "fatal", msg, fields)
 }
 
@@ -259,7 +261,7 @@ func dummyf(buf *bytes.Buffer, level, template string, args ...interface{}) {
 	buf.WriteString(str)
 }
 
-func dummyw(buf *bytes.Buffer, level string, msg interface{}, fields Fields) {
+func dummyw(buf *bytes.Buffer, level string, msg interface{}, fields log.Fields) {
 	var flds string
 	for k, v := range fields {
 		flds += fmt.Sprintf("%s=%s ", k, v)

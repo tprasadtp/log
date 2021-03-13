@@ -1,4 +1,4 @@
-package log
+package log_test
 
 import (
 	"bytes"
@@ -6,6 +6,8 @@ import (
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/tprasadtp/log"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -17,7 +19,7 @@ func TestStdLogger(t *testing.T) {
 		stdlog.SetOutput(os.Stderr)
 	}()
 
-	lgr := NewDefault()
+	lgr := log.NewDefault()
 
 	// Make sure levels are working
 	lgr.Debug("test debug")
@@ -28,7 +30,7 @@ func TestStdLogger(t *testing.T) {
 	buf.Reset()
 
 	// Test all levels
-	lgr.Level = TraceLevel
+	lgr.Level = log.TraceLevel
 
 	lgr.Trace("test debug")
 	if !strings.Contains(buf.String(), `[TRACE] test debug`) {
@@ -43,7 +45,7 @@ func TestStdLogger(t *testing.T) {
 	}
 	buf.Reset()
 
-	lgr.Tracew("foo bar", Fields{"baz": "qux"})
+	lgr.Tracew("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `[TRACE] foo bar [baz=qux]`) {
 		t.Log(buf.String())
 		t.Error("stdlib trace not logging correctly")
@@ -63,7 +65,7 @@ func TestStdLogger(t *testing.T) {
 	}
 	buf.Reset()
 
-	lgr.Debugw("foo bar", Fields{"baz": "qux"})
+	lgr.Debugw("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `[DEBUG] foo bar [baz=qux]`) {
 		t.Log(buf.String())
 		t.Error("stdlib debug not logging correctly")
@@ -82,7 +84,7 @@ func TestStdLogger(t *testing.T) {
 	}
 	buf.Reset()
 
-	lgr.Infow("foo bar", Fields{"baz": "qux"})
+	lgr.Infow("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `[INFO ] foo bar [baz=qux]`) {
 		t.Log(buf.String())
 		t.Error("stdlib info not logging correctly")
@@ -103,7 +105,7 @@ func TestStdLogger(t *testing.T) {
 	}
 	buf.Reset()
 
-	lgr.Warnw("foo bar", Fields{"baz": "qux"})
+	lgr.Warnw("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `[WARN ] foo bar [baz=qux]`) {
 		t.Log(buf.String())
 		t.Error("stdlib warn not logging correctly")
@@ -124,7 +126,7 @@ func TestStdLogger(t *testing.T) {
 	}
 	buf.Reset()
 
-	lgr.Errorw("foo bar", Fields{"baz": "qux"})
+	lgr.Errorw("foo bar", log.Fields{"baz": "qux"})
 	if !strings.Contains(buf.String(), `[ERROR] foo bar [baz=qux]`) {
 		t.Log(buf.String())
 		t.Error("stdlib error not logging correctly")
@@ -150,7 +152,7 @@ func TestStdLogger(t *testing.T) {
 	buf.Reset()
 
 	assert.PanicsWithValue(t, "[PANIC] foo bar [baz=qux]", func() {
-		lgr.Panicw("foo bar", Fields{"baz": "qux"})
+		lgr.Panicw("foo bar", log.Fields{"baz": "qux"})
 	})
 	if !strings.Contains(buf.String(), `foo bar [baz=qux]`) {
 		t.Log(buf.String())
