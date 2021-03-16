@@ -8,7 +8,6 @@ func main() {
 
 	l := log.NewDefault()
 	l.Level = log.TraceLevel
-	log.Current = l
 
 	log.Trace("Hello,", "World")
 	log.Debug("Hello,", "World")
